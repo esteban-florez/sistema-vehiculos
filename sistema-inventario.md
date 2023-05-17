@@ -2,8 +2,7 @@
 
 Modelos
   - Nombre del modelo.
-  - Cantidad de componentes.
-  - Nombres de los distintos componentes.
+  - Componentes (cantidad, nombre).
 
 Vehículos
   - Serial
@@ -11,7 +10,6 @@ Vehículos
 Componentes
   - Código del vehiculo (rel)
   - Código
-  - Nombre
   - Observaciones
   - Status (bueno o malo/completo o incompleto)
 
@@ -40,5 +38,5 @@ Registro el vehículo mas 31 componentes. Puede hacerse como "pestañas" para el
 Se necesita reporte de todos los camiones activos. El listado de camiones.
 
 El inventario debería funcionar para más tipos de vehículos. Ellos solo quieren el URAL ese.
-s
+
 Cada componente tiene partes, y cada parte tiene un código. Los componentes también tienen código. El status del camión depende de que sus componentes estén en status: bueno/completo, y que las partes de los componentes estén en estado: bueno. Se registra en un formulario por pestañas, cada pestaña un componente.
