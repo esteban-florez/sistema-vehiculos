@@ -29,7 +29,7 @@ Se trabajaran con vehículos de transporte, específicamente el URAL 9259B.
 
 Se van a registrar los componentes que los vehículos de transporte tienen en la cava (parte trasera). Puede llevar 31 componentes (este tranporte en específico). Cada componente tiene piezas o partes. Ej. Caja de herramientas, tiene serial (#0003 ejemplo).
 
-Se registra el camión de transporte, y al mismo tiempo se registran los 31 componentes. En cada componente se tienen que registrar las piezas. De cada uno componente se debe manejar un status (si está todo completo, si está bien o no).
+Se registra el camión de transporte, y al mismo tiempo se registran los 31 componentes. En cada componente se tienen que registrar las piezas. De cada componente se debe manejar un status (si está todo completo, si está bien o no).
 
 Cuando yo haga el registro total del camión completo, cuando se busque el reporte del camión, tengo que recorrer el status de los 31 componentes, si los 31 están bien, entonces el camión está completo/activo (eso es lo que se quiere saber).
 

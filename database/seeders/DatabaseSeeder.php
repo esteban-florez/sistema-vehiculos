@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         Type::create([
             'name' => 'URAL',
-            'components' => [
+            'components' => json_encode([
                 'Componente 1',  'Componente 2',
                 'Componente 3',  'Componente 4',
                 'Componente 5',  'Componente 6',
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'Componente 27', 'Componente 28',
                 'Componente 29', 'Componente 30',
                 'Componente 31'
-              ]
+            ]),
         ]);
     }
 }
