@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,11 +18,12 @@ Route::view('/', 'home')
     ->name('home');
 
 Route::get('vehicles/create', function () {
-    return view('vehicles.create', [
-        'types' => Type::all(),
-    ]);
+    return view('vehicles.create');
 })->name('vehicles.create');
 
 Route::post('vehicles', function (Request $request) {
-    dd($request);
+    $data = $request->validate([
+        'serial' => ['required', 'string', 'max:10', 'min:5'],
+        'type_id' => ['required', 'integer'],
+    ]);
 })->name('vehicles.store');
