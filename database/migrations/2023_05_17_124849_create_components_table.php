@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('serial');
             $table->boolean('status');
             $table->text('description');
             $table->foreignId('vehicle_id');

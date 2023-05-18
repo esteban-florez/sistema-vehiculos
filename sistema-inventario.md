@@ -6,10 +6,11 @@ Modelos
 
 Vehículos
   - Serial
+  - Modelo (rel)
 
 Componentes
   - Código del vehiculo (rel)
-  - Código
+  - Serial
   - Observaciones
   - Status (bueno o malo/completo o incompleto)
 

@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 .btn {
-  @apply normal-case
+  @apply normal-case text-base;
+}
+
+.label {
+  @apply font-semibold;
 }

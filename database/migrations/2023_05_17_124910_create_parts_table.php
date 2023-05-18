@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
             $table->string('serial');
+            $table->string('code');
             $table->integer('amount');
             $table->string('notch');
             $table->string('box');
