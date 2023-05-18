@@ -1,4 +1,14 @@
-@props(['title'])
+@props(['title', 'react' => false])
+
+@php
+  $resources = [
+    'resources/css/app.css'
+  ];
+
+  if ($react) {
+    $resources[] = 'resources/js/main.jsx';
+  }
+@endphp
 
 <!DOCTYPE html>
 <html class="h-full bg-gray-100" lang="es">
@@ -6,8 +16,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="server-url" content="{{ url('/') }}">
   <title>Inventario de Vehículos</title>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @if ($react)
+    @viteReactRefresh
+  @endif
+  @vite($resources)
 </head>
 <body class="h-full">
   <div class="min-h-full">
@@ -40,7 +55,11 @@
       </div>
     </header>
     <main>
-      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8" 
+        @if ($react)
+          id="reactRoot"
+        @endif
+      >
         {{ $slot }}
       </div>
     </main>
