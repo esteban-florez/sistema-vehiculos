@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'home');
+Route::view('/', 'home')
+    ->name('home');
 
 Route::get('vehicles/create', function () {
     return view('vehicles.create', [
