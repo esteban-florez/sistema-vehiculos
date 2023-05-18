@@ -52,14 +52,6 @@ export default function Form() {
             components={components}
           />
         )}
-        <div className="card-actions mt-4">
-          <button className="btn btn-primary" type="button" disabled={!components} onClick={() => setStep(step + 1)}>
-            Siguiente
-          </button>
-          <a className="btn btn-ghost" href={`${SERVER_URL}`}>
-            Volver
-          </a>
-        </div>
       </div>
     </form>
   )

@@ -1,3 +1,4 @@
+import ButtonsPanel from './ButtonsPanel'
 import ComponentFormHeader from './ComponentFormHeader'
 import Instructions from './Instructions'
 
@@ -37,6 +38,7 @@ export default function ComponentForm({ components }) {
           <textarea className="textarea textarea-bordered h-24 resize-none text-base" placeholder="Ej. Recibido de el proveeder 18"></textarea>
         </div>
       </div>
+      <ButtonsPanel />
     </>
   )
 }

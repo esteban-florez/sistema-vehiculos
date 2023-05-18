@@ -1,5 +1,5 @@
-import { SERVER_URL } from '../constants'
 import Instructions from './Instructions'
+import ButtonsPanel from './ButtonsPanel'
 
 export default function VehicleForm({ vehicle, types, updateVehicle }) {
   function handleSelect(e) {
@@ -19,7 +19,7 @@ export default function VehicleForm({ vehicle, types, updateVehicle }) {
           <label className="label" htmlFor="serial">
             Ingrese el serial del vehículo:
           </label>
-          <input type="text" placeholder="Ej. 1823B" name="serial" id="serial" value={vehicle.serial} className="input input-bordered w-full max-w-xs" onInput={(e) => updateVehicle('serial', e.target.value)}/>
+          <input type="text" placeholder="Ej. 1823B" name="serial" id="serial" value={vehicle.serial} className="input input-bordered w-full max-w-xs" onInput={(e) => updateVehicle('serial', e.target.value.toUpperCase())}/>
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label" htmlFor="typeId">
@@ -33,6 +33,7 @@ export default function VehicleForm({ vehicle, types, updateVehicle }) {
           </select>
         </div>
       </div>
+      <ButtonsPanel />
     </>
   )
 }
