@@ -1,9 +1,11 @@
 import Instructions from './Instructions'
 import ButtonsPanel from './ButtonsPanel'
 
-export default function VehicleForm({ vehicle, types, updateVehicle }) {
+export default function VehicleForm({ vehicle, types, updateVehicle, goNext }) {
   function handleSelect(e) {
-    const selected = Number(e.target.selectedOptions[0].value)
+    /** DRY - 1 */
+    const value = Number(e.target.selectedOptions[0].value)
+    const selected = isNaN(value) ? '' : value
 
     updateVehicle('typeId', selected)
   }
@@ -25,15 +27,15 @@ export default function VehicleForm({ vehicle, types, updateVehicle }) {
           <label className="label" htmlFor="typeId">
             Seleccione el modelo:
           </label>
-          <select name="typeId" id="typeId" className="select select-bordered" selected={vehicle.typeId} onChange={handleSelect}>
-            <option>Seleccionar...</option>
+          <select name="typeId" id="typeId" className="select select-bordered" value={vehicle.typeId} onChange={handleSelect}>
+            <option value="">Seleccionar...</option>
             {types && types.map(type => (
               <option key={type.id} value={type.id}>{type.name}</option>
             ))}
           </select>
         </div>
       </div>
-      <ButtonsPanel />
+      <ButtonsPanel onNext={goNext}/>
     </>
   )
 }

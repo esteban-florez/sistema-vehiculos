@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('types', function () {
-    $types = Type::all();
+    $types = Type::with('componentNames')->get();
 
     return $types;
 });
