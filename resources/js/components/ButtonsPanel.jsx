@@ -28,8 +28,8 @@ export default function ButtonsPanel({ onNext, onBack, nextDisabled, goVehicle, 
       </div>
       <div className="space-x-2">
         {goVehicle && (
-          <button className="btn btn-neutral" type="button" onClick={goVehicle}>
-            Cambiar datos del vehículo
+          <button className="btn btn-warning" type="button" onClick={goVehicle}>
+            Editar vehículo
           </button>
         )}
         <a href={`${SERVER_URL}`} className="btn btn-error">

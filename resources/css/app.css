@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.input, .select, .radio, .textarea {
+  @apply shadow-inner;
+}
+
 .btn {
   @apply normal-case text-base;
 }
