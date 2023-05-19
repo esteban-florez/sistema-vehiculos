@@ -6,6 +6,14 @@
   @apply normal-case text-base;
 }
 
+.btn.btn-primary[disabled] {
+  @apply bg-primary text-white brightness-75;
+}
+
+.btn.btn-success[disabled] {
+  @apply bg-success text-white brightness-75;
+}
+
 .label {
   @apply font-semibold;
 }

@@ -1,17 +1,25 @@
-export default function ComponentFormHeader({ components, current, changeCurrent }) {
+export default function ComponentFormHeader({ components, current, changeCurrent, vehicleDescription }) {
   function handleSelect(e) {
     /** DRY - 1 */
     const value = Number(e.target.selectedOptions[0].value)
-    const selected = isNaN(value) ? null : value
+    const selected = value === 0 ? '' : value
 
     changeCurrent(selected)
   }
 
   return (
     <div className="flex bg-primary rounded-lg p-3 text-white justify-between items-center">
-      <h2 className="text-2xl font-bold mb-2 tracking-tight">
-        Registro de los componentes
-      </h2>
+      <div>
+        <h2 className="text-2xl font-bold mb-2 tracking-tight">
+          Registro de los componentes
+        </h2>
+        <p className="text-lg -mt-2 font-semibold">
+          <span>Vehículo:</span>
+          <span className="font-bold tracking-tight ml-1">
+            {vehicleDescription}   
+          </span>
+         </p>
+      </div>
       <div className="bg-white text-black rounded-lg py-2 px-3">
         <label className="label inline mr-4" htmlFor="current">
           Editando el componente:

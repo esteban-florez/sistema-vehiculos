@@ -3,16 +3,35 @@ import ButtonsPanel from './ButtonsPanel'
 import ComponentFormHeader from './ComponentFormHeader'
 import Instructions from './Instructions'
 
-export default function ComponentForm({ components, updateComponent, goBack }) {
+export default function ComponentForm({ components, updateComponent, goVehicle, vehicleDescription }) {
   const [current, setCurrent] = useState(components[0].id)
-  const component = components.find(component => component.id === current)
+  const index = components.findIndex(component => component.id === current)
+  const isLast = index === components.length - 1
+
+  const component = components[index]
   const { id, name, serial, status, description } = component
 
   const changeCurrent = id => setCurrent(id)
 
+  const nextDisabled = !serial || !description
+
+  function onBack() {
+    if (index < 1) {
+      goVehicle()
+      return
+    }
+
+    setCurrent(components[index - 1].id)
+  }
+
   return (
     <>
-      <ComponentFormHeader components={components} current={current} changeCurrent={changeCurrent}/>
+      <ComponentFormHeader 
+        components={components} 
+        current={current}
+        changeCurrent={changeCurrent}
+        vehicleDescription={vehicleDescription}
+      />
       <div className="flex px-2">
         <div className="w-2/5">
           <h3 className="font-bold tracking-tight text-2xl mt-4 text-primary">
@@ -54,7 +73,14 @@ export default function ComponentForm({ components, updateComponent, goBack }) {
           <h3 className="text-center">Partes del componente</h3>
         </div>
       </div>
-      <ButtonsPanel onBack={goBack}/>
+      {/* TODO -> hacer la cosa del submit disabled */}
+      <ButtonsPanel 
+        onNext={isLast ? null : () => setCurrent(components[index + 1].id)}
+        nextDisabled={nextDisabled}
+        onBack={onBack}
+        withSubmit={isLast}
+        submitDisabled={true}
+        goVehicle={goVehicle}/>
     </>
   )
 }

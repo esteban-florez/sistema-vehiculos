@@ -1,6 +1,6 @@
 import { SERVER_URL } from "../constants"
 
-export default function ButtonsPanel({ onNext, onBack }) {
+export default function ButtonsPanel({ onNext, onBack, nextDisabled, goVehicle, withSubmit, submitDisabled }) {
   const backButton = onBack ? (
     <button className="btn btn-ghost" type="button" onClick={onBack}>
       Volver
@@ -14,14 +14,28 @@ export default function ButtonsPanel({ onNext, onBack }) {
   return (
     <div className="card-actions justify-between mt-4">
       <div className="space-x-2">
-        <button className="btn btn-primary" type="button" onClick={onNext}>
-          Siguiente
-        </button>
+        {onNext && (
+          <button className="btn btn-primary" type="button" onClick={onNext} disabled={nextDisabled}>
+            Siguiente
+          </button>
+        )}
+        {withSubmit && (
+          <button className="btn btn-success" type="submit" disabled={submitDisabled}>
+            Registrar vehículo
+          </button>
+        )}
         {backButton}
       </div>
-      <a href={`${SERVER_URL}`} className="btn btn-error">
-        Cancelar
-      </a>
+      <div className="space-x-2">
+        {goVehicle && (
+          <button className="btn btn-neutral" type="button" onClick={goVehicle}>
+            Cambiar datos del vehículo
+          </button>
+        )}
+        <a href={`${SERVER_URL}`} className="btn btn-error">
+          Cancelar
+        </a>
+      </div>
     </div>
   )
 }
