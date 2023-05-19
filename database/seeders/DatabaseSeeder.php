@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ComponentName;
 use App\Models\Type;
 use Illuminate\Database\Seeder;
 
@@ -12,18 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $components = [];
+        $type = Type::create([
+            'name' => 'URAL',
+        ]);
 
         for ($i = 1; $i <= 31; $i++) { 
-            $components[] = [
-                'id' => $i,
-                'name' => "Componente {$i}"
-            ];
+            ComponentName::create([
+                'name' => "Componente {$i}",
+                'type_id' => $type->id,
+            ]);
         }
-
-        Type::create([
-            'name' => 'URAL',
-            'components' => json_encode($components),
-        ]);
     }
 }

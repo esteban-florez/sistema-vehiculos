@@ -13,7 +13,13 @@ class Component extends Model
         return $this->hasMany(Part::class);
     }
 
-    public function vehicle() {
+    public function vehicle()
+    {
         return $this->belongsTo(Vehicle::class);
+    }
+
+    public function componentName()
+    {
+        return $this->belongsTo(ComponentName::class);
     }
 }

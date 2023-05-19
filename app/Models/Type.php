@@ -12,4 +12,9 @@ class Type extends Model
     {
         return $this->hasMany(Vehicle::class);
     }
+
+    public function componentNames()
+    {
+        return $this->hasMany(ComponentName::class);
+    }
 }
