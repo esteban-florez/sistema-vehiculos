@@ -13,7 +13,7 @@ export default function ComponentFields({ component, updateComponent }) {
       <Instructions>
         Ingrese el serial, el estado y las observaciones del componente. 
       </Instructions>
-      <div className="grid grid-cols-3 justify-items-center pb-4 mt-4">
+      <div className="grid grid-cols-3 justify-items-center pb-4 mt-4 bg-gray-100 rounded-lg shadow-md">
         <div className="form-control w-full max-w-xs mt-3">
           <label className="label" htmlFor="serial">
             Ingrese el serial del componente:
