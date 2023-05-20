@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ComponentName extends Model
 {
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $table = 'component_names';
 
