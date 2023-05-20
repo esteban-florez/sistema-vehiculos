@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,9 @@ Route::view('/', 'home')
 Route::get('vehicles/create', function () {
     return view('vehicles.create');
 })->name('vehicles.create');
+
+Route::get('vehicles', function () {
+    return view('vehicles.index', [
+        'vehicles' => Vehicle::all(),
+    ]);
+})->name('vehicles.index');

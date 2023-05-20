@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../constants"
+import { PREVIOUS_URL } from '../constants'
 
 export default function ButtonsPanel({ onNext, onBack, nextDisabled, goVehicle, withSubmit, submitDisabled }) {
   const backButton = onBack ? (
@@ -6,7 +6,7 @@ export default function ButtonsPanel({ onNext, onBack, nextDisabled, goVehicle, 
       Volver
     </button>
   ) : (
-    <a href={`${SERVER_URL}`} className="btn btn-ghost">
+    <a href={`${PREVIOUS_URL}`} className="btn btn-ghost">
       Volver
     </a>
   )
@@ -32,7 +32,7 @@ export default function ButtonsPanel({ onNext, onBack, nextDisabled, goVehicle, 
             Editar vehículo
           </button>
         )}
-        <a href={`${SERVER_URL}`} className="btn btn-error">
+        <a href={`${PREVIOUS_URL}`} className="btn btn-error">
           Cancelar
         </a>
       </div>

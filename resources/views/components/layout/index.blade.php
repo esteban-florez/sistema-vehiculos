@@ -16,8 +16,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <meta name="server-url" content="{{ url('/') }}">
+  @if ($react)
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="server-url" content="{{ url('/') }}">
+    <meta name="previous-url" content="{{ url()->previous() }}">
+  @endif
   <title>Inventario de Vehículos</title>
   @if ($react)
     @viteReactRefresh
@@ -31,18 +34,25 @@
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <a href="{{ route('home') }}">
-                <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+              <a class="flex items-center gap-1" href="{{ route('home') }}">
+                <svg class="w-8 h-8 stroke-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                </svg>
+                <span class="text-white text-2xl font-bold tracking-tighter">SIV</span>
               </a>
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 font-medium" aria-current="page">Vehículos</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">Modelos</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">Componentes</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">Partes</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">Reportes</a>
+                <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 font-medium">
+                  Inicio
+                </a>
+                <a href="{{ route('vehicles.create') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">
+                  Registrar vehículo
+                </a>
+                <a href="{{ route('vehicles.index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">
+                  Lista de vehículos
+                </a>
               </div>
             </div>
           </div>
@@ -55,11 +65,7 @@
       </div>
     </header>
     <main>
-      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8" 
-        @if ($react)
-          id="reactRoot"
-        @endif
-      >
+      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8" id="root">
         {{ $slot }}
       </div>
     </main>
