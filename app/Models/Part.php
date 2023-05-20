@@ -20,4 +20,42 @@ class Part extends Model
             get: fn($value) => $value ? 'Bueno' : 'Malo'
         );
     }
+
+    public function observation(): Attribute
+    {
+        return Attribute::make(
+            get: $this->optVal(),
+        );
+    }
+
+    public function notch(): Attribute
+    {
+        return Attribute::make(
+            get: $this->optVal(),
+        );
+    }
+    public function box(): Attribute
+    {
+        return Attribute::make(
+            get: $this->optVal(),
+        );
+    }
+
+    public function code(): Attribute
+    {
+        return Attribute::make(
+            get: $this->optVal(),
+        );
+    }
+
+    protected function optVal()
+    {
+        return function ($value) {
+            if ($value ?? false) {
+                return $value;
+            }
+
+            return 'N/A';
+        };
+    }
 }

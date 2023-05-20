@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Vehicle;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +36,22 @@ Route::get('vehicles', function () {
         'activeCount' => $activeCount,
     ]);
 })->name('vehicles.index');
+
+Route::get('vehicles/{vehicle}/report', function (Vehicle $vehicle) {
+    $vehicle->load('components.parts', 'type.componentNames');
+
+    $pdf = PDF::loadView('pdf.vehicle-report', [
+        'vehicle' => $vehicle,
+        'date' => now()->format('d/m/Y')
+    ]);
+
+    $pdf->setPaper('a4', 'landscape');
+
+    $filename = 'Reporte-Vehiculo.pdf';
+    $path = public_path($filename);
+    $pdf->save($filename);
+
+    return response()
+        ->download($path)
+        ->deleteFileAfterSend();
+})->name('vehicle.report');

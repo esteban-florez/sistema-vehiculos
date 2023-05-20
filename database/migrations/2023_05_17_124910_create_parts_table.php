@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
             $table->string('serial');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->text('description');
             $table->integer('amount');
-            $table->string('box');
-            $table->string('notch');
-            $table->text('observation');
+            $table->string('box')->nullable();
+            $table->string('notch')->nullable();
+            $table->text('observation')->nullable();
             $table->boolean('status');
             $table->foreignId('component_id')
                 ->constrained()

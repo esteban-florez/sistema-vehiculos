@@ -14,7 +14,7 @@ export default function ComponentPartsTable({ parts, editPart, deletePart }) {
             <th>Caja</th>
             <th>Muesca</th>
             <th>Observ.</th>
-            <th>Status</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>

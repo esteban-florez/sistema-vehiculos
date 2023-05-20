@@ -24,7 +24,7 @@
             <th>Modelo</th>
             <th>Serial</th>
             <th>Nro. componentes</th>
-            <th>Status</th>
+            <th>Estado</th>
             <th class="text-center">Acciones</th>
           </tr>
         </thead>
@@ -37,6 +37,9 @@
               <td>{{ $vehicle->type->componentNames->count() }} componentes</td>
               <td>{{ $vehicle->status }}</td>
               <td class="text-center">
+                <a href="{{ route('vehicle.report', $vehicle) }}" class="btn btn-sm btn-success">
+                  Descargar reporte
+                </a>
                 <button class="btn btn-sm btn-warning">
                   Editar
                 </button>

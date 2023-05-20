@@ -35,4 +35,25 @@ class Component extends Model
             },
         );
     }
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->componentName->name,
+        );
+    }
+
+    
+    public function description(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                if ($value ?? false) {
+                    return $value;
+                }
+
+                return 'N/A';
+            },
+        );
+    }
 }
