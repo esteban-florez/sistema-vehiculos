@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('serial');
             $table->string('code');
-            $table->integer('amount');
-            $table->string('notch');
-            $table->string('box');
             $table->text('description');
+            $table->integer('amount');
+            $table->string('box');
+            $table->string('notch');
+            $table->text('observation');
             $table->boolean('status');
             $table->foreignId('component_id');
             $table->timestamps();

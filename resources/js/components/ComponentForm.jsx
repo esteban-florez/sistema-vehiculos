@@ -10,11 +10,9 @@ export default function ComponentForm({ components, updateComponent, goVehicle, 
   const isLast = index === components.length - 1
 
   const component = components[index]
-  const { name, serial, description } = component
+  const { name, serial } = component
 
   const changeCurrent = id => setCurrent(id)
-
-  const nextDisabled = !serial || !description
 
   function onBack() {
     if (index < 1) {
@@ -44,7 +42,7 @@ export default function ComponentForm({ components, updateComponent, goVehicle, 
       {/* TODO -> hacer la cosa del submit disabled */}
       <ButtonsPanel 
         onNext={isLast ? null : () => setCurrent(components[index + 1].id)}
-        nextDisabled={nextDisabled}
+        nextDisabled={!serial}
         onBack={onBack}
         withSubmit={isLast}
         submitDisabled={true}
