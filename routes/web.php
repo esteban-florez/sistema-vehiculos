@@ -23,7 +23,16 @@ Route::get('vehicles/create', function () {
 })->name('vehicles.create');
 
 Route::get('vehicles', function () {
+    $vehicles = Vehicle::
+        with('type.componentNames', 'components.parts')
+        ->paginate(5);
+
+    $activeCount = $vehicles
+        ->filter(fn($vehicle) => $vehicle->status === 'Activo')
+        ->count();
+
     return view('vehicles.index', [
-        'vehicles' => Vehicle::all(),
+        'vehicles' => $vehicles,
+        'activeCount' => $activeCount,
     ]);
 })->name('vehicles.index');

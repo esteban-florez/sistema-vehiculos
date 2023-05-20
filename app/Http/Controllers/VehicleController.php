@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Validator;
 class VehicleController extends Controller
 {
     public function store(Request $request) {
-        // DEV
-        Vehicle::first()?->delete();
-
         $content = $request->content();
 
         $vehicle = $content['vehicle'];

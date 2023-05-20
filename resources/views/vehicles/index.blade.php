@@ -3,9 +3,9 @@
     <div class="bg-neutral text-white p-4 rounded-lg shadow-md flex items-center justify-between">
       <div>
         <h3 class="text-2xl font-bold">
-          Total de vehículos: 31 unidades
+          Total de vehículos: {{ $vehicles->count() }} unidades
         </h3>
-        <p class="font-semibold text-lg">Unidades activas: 11</p>
+        <p class="font-semibold text-lg">Unidades activas: {{ $activeCount }} unidades</p>
       </div>
       <a href="{{ route('vehicles.create') }}" class="btn bg-white text-neutral hover:bg-gray-100 active:bg-gray-300 flex items-center">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -16,39 +16,47 @@
         </span>
       </a>
     </div>
-    <table class="table w-full mt-4">
-      <!-- head -->
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Job</th>
-          <th>Favorite Color</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- row 1 -->
-        <tr>
-          <th>1</th>
-          <td>Cy Ganderton</td>
-          <td>Quality Control Specialist</td>
-          <td>Blue</td>
-        </tr>
-        <!-- row 2 -->
-        <tr>
-          <th>2</th>
-          <td>Hart Hagerty</td>
-          <td>Desktop Support Technician</td>
-          <td>Purple</td>
-        </tr>
-        <!-- row 3 -->
-        <tr>
-          <th>3</th>
-          <td>Brice Swyre</td>
-          <td>Tax Accountant</td>
-          <td>Red</td>
-        </tr>
-      </tbody>
-    </table>
+    @if ($vehicles)
+      <table class="table w-full mt-4">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Modelo</th>
+            <th>Serial</th>
+            <th>Nro. componentes</th>
+            <th>Status</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($vehicles as $vehicle)
+            <tr>
+              <th>{{ $vehicle->id }}</th>
+              <td>{{ $vehicle->type->name }}</td>
+              <td>{{ $vehicle->serial }}</td>
+              <td>{{ $vehicle->type->componentNames->count() }} componentes</td>
+              <td>{{ $vehicle->status }}</td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-warning">
+                  Editar
+                </button>
+                <button class="btn btn-sm btn-error">
+                  Eliminar
+                </button>
+                <button class="btn btn-sm btn-neutral">
+                  Ver componentes
+                </button>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    @else
+      <x-empty>No se han registrado vehículos.</x-empty>       
+    @endif
+    <div class="divider divider-vertical"></div>
+    <div class="bg-gray-200 rounded-lg p-3 mt-3 flex justify-center">
+      {{ $vehicles->links() }}
+    </div>
   </div>
 </x-layout>

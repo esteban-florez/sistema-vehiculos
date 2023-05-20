@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Component extends Model
@@ -21,5 +22,17 @@ class Component extends Model
     public function componentName()
     {
         return $this->belongsTo(ComponentName::class);
+    }
+
+    public function status(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $every = $this->parts
+                    ->every(fn($part) => $part->status === 'Bueno');
+
+                return $value && $every ? 'Bueno' : 'Malo'; 
+            },
+        );
     }
 }
