@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Request::macro('content', function () {
+            $this->validate([
+                'content' => 'json',
+            ]);
+        
+            return json_decode($this->input('content'), true);
+        });
     }
 }

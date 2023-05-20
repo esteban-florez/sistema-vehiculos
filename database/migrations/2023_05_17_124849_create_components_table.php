@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('serial');
             $table->boolean('status');
             $table->text('description');
-            $table->foreignId('vehicle_id');
+            $table->foreignId('vehicle_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->foreignId('component_name_id');
             $table->timestamps();
         });

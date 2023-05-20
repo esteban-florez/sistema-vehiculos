@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-            $table->string('serial');
+            $table->string('serial')->unique();
             $table->foreignId('type_id');
             $table->timestamps();
         });

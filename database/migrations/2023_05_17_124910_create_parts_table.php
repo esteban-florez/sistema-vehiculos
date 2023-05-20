@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('notch');
             $table->text('observation');
             $table->boolean('status');
-            $table->foreignId('component_id');
+            $table->foreignId('component_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

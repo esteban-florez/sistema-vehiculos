@@ -20,10 +20,3 @@ Route::view('/', 'home')
 Route::get('vehicles/create', function () {
     return view('vehicles.create');
 })->name('vehicles.create');
-
-Route::post('vehicles', function (Request $request) {
-    $data = $request->validate([
-        'serial' => ['required', 'string', 'max:10', 'min:5'],
-        'type_id' => ['required', 'integer'],
-    ]);
-})->name('vehicles.store');
