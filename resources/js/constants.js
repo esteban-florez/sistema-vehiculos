@@ -10,3 +10,9 @@ export const STEPS = {
   VEHICLE: Symbol('vehicle'),
   COMPONENTS: Symbol('components')
 }
+
+export const RESULTS = {
+  LOADING: Symbol('loading'),
+  SUCESS: Symbol('success'),
+  FAILURE: Symbol('failure'),
+}

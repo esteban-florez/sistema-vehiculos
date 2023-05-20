@@ -18,23 +18,21 @@ class VehicleController extends Controller
         $parts = collect($content['parts']);
 
         $vehicle = $this->validateVehicle($vehicle);
-        logger('wuw', $vehicle);
-
-
         $components = $this->validateComponents($components);
         $parts = $this->validateParts($parts);
-
         $vehicle_id = Vehicle::create($vehicle)->id;
 
-        $components = $components->mapWithKeys(function ($component) use ($vehicle_id) {
+        $map = new \stdClass;
+
+        $components->each(function ($component) use ($vehicle_id, $map) {
             $component['vehicle_id'] = $vehicle_id;
             $component = Component::create($component);
-            return [$component->component_name_id, $component->id];
+            $map->{"a{$component->component_name_id}"} = $component->id;
         });
 
-        $parts = $parts->map(function ($part) use ($components) {
+        $parts = $parts->map(function ($part) use ($map) {
             $nameId = $part['component_name_id'];
-            $part['component_id'] = $components[$nameId];
+            $part['component_id'] = $map->{"a{$nameId}"};
             unset($part['component_name_id']);
             return $part;
         });

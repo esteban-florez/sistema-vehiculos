@@ -8,6 +8,12 @@
   if ($react) {
     $resources[] = 'resources/js/main.jsx';
   }
+
+  $links = [
+    'home' => 'Inicio',
+    'vehicles.create' => 'Registro de vehículos',
+    'vehicles.index' => 'Lista de vehículos',
+  ];
 @endphp
 
 <!DOCTYPE html>
@@ -43,16 +49,21 @@
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 font-medium">
-                  Inicio
-                </a>
-                <a href="{{ route('vehicles.create') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">
-                  Registrar vehículo
-                </a>
-                <a href="{{ route('vehicles.index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium">
-                  Lista de vehículos
-                </a>
+                @foreach ($links as $link => $text)
+                  @php
+                    $current = Route::currentRouteName();
+                    $classes = 'rounded-md px-3 py-2 font-medium';
+
+                    if ($link === $current) {
+                      $classes = "bg-gray-900 text-white {$classes}";
+                    } else {
+                      $classes = "text-gray-300 hover:bg-gray-700 hover:text-white {$classes}";
+                    }
+                  @endphp
+                  <a href="{{ route($link) }}" class="{{ $classes }}">
+                    {{ $text }}
+                  </a>    
+                @endforeach
               </div>
             </div>
           </div>

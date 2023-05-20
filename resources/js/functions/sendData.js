@@ -1,6 +1,6 @@
-import { FORM_ACTION } from '../constants'
+import { FORM_ACTION, RESULTS } from '../constants'
 
-export default async function sendData(data) {
+export default async function sendData(data, setResult) {
   data.parts.forEach(part => {
     part.component_id = part.componentId
     delete part.componentId
@@ -21,14 +21,16 @@ export default async function sendData(data) {
       body: formData,
     })
     
-    if (response.status === 422) {
+    if (response.status === 422 || !response.ok) {
       const errors = await response.json()
+      setResult(RESULTS.FAILURE)
       console.log(errors)
       // TODO -> manejar errores de validación
     }
 
     if (response.status === 201) {
       console.log('Enviado con éxito')
+      setResult(RESULTS.SUCESS)
       // TODO -> mensaje de éxito y redirección
     }
   } catch (error) {

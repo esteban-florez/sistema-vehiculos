@@ -1,5 +1,6 @@
 export default function PartsForm({ open, closeModal, part, editing, updateFormPart, resetForm, updatePart, addPart, resetEditing }) {
-  // TODO -> validacion de este form
+  const { serial, code, status, amount, box, notch, description, observation } = part
+
   function handleAccept() {
     if (editing) {
       updatePart()
@@ -46,25 +47,25 @@ export default function PartsForm({ open, closeModal, part, editing, updateFormP
               <label className="label" htmlFor="partSerial">
                 Ingrese el serial:
               </label>
-              <input type="text" placeholder="Ej. K2D12" name="part_serial" id="partSerial" className="input input-bordered w-full max-w-xs" value={part.serial} onInput={(e) => updateFormPart('serial', e.target.value.toUpperCase())}/>
+              <input type="text" placeholder="Ej. K2D12" name="part_serial" id="partSerial" className="input input-bordered w-full max-w-xs" value={serial} onInput={(e) => updateFormPart('serial', e.target.value.toUpperCase())}/>
             </div>
             <div className="form-control w-full max-w-xs bg-white">
               <label className="label" htmlFor="partCode">
                 Ingrese el código (opcional):
               </label>
-              <input type="text" placeholder="Ej. 153.8413.1" name="part_code" id="partCode" className="input input-bordered w-full max-w-xs" value={part.code} onInput={(e) => updateFormPart('code', e.target.value.toUpperCase())}/>
+              <input type="text" placeholder="Ej. 153.8413.1" name="part_code" id="partCode" className="input input-bordered w-full max-w-xs" value={code} onInput={(e) => updateFormPart('code', e.target.value.toUpperCase())}/>
             </div>
             <div className="w-full">
               <p className="label">Seleccione el estado:</p>
               <div className="flex flex-row">
                 <div className="form-control flex flex-row items-center gap-1 w-full max-w-xs">
-                  <input type="radio" name="part_status" className="radio checked:bg-green-500" id="partStatusTrue" checked={part.status} onChange={() => updateFormPart('status', true)}/>
+                  <input type="radio" name="part_status" className="radio checked:bg-green-500" id="partStatusTrue" checked={status} onChange={() => updateFormPart('status', true)}/>
                   <label className="label text-green-600" htmlFor="partStatusTrue">
                     Bueno
                   </label>
                 </div>
                 <div className="form-control flex flex-row items-center gap-1 w-full max-w-xs">
-                  <input type="radio" name="part_status" className="radio checked:bg-red-500" id="partStatusFalse" checked={!part.status} onChange={() => updateFormPart('status', false)}/>
+                  <input type="radio" name="part_status" className="radio checked:bg-red-500" id="partStatusFalse" checked={!status} onChange={() => updateFormPart('status', false)}/>
                   <label className="label text-red-500" htmlFor="partStatusFalse">
                     Malo
                   </label>
@@ -75,35 +76,35 @@ export default function PartsForm({ open, closeModal, part, editing, updateFormP
               <label className="label" htmlFor="partAmount">
                 Ingrese la cantidad:
               </label>
-              <input type="number" placeholder="Ej. 100" name="part_amount" id="partAmount" className="input input-bordered w-full max-w-xs" value={part.amount} onInput={handleAmountInput}/>
+              <input type="number" placeholder="Ej. 100" name="part_amount" id="partAmount" className="input input-bordered w-full max-w-xs" value={amount} onInput={handleAmountInput}/>
             </div>
             <div className="form-control w-full max-w-xs bg-white">
               <label className="label" htmlFor="partBox">
                 Ingrese la caja (opcional):
               </label>
-              <input type="text" placeholder="Ej. 3" name="part_box" id="partBox" className="input input-bordered w-full max-w-xs" value={part.box} onInput={(e) => updateFormPart('box', e.target.value)}/>
+              <input type="text" placeholder="Ej. 3" name="part_box" id="partBox" className="input input-bordered w-full max-w-xs" value={box} onInput={(e) => updateFormPart('box', e.target.value)}/>
             </div>
             <div className="form-control w-full max-w-xs bg-white">
               <label className="label" htmlFor="partNotch">
                 Ingrese la muesca (opcional):
               </label>
-              <input type="text" placeholder="Ej. 10" name="part_notch" id="partNotch" className="input input-bordered w-full max-w-xs" value={part.notch} onInput={(e) => updateFormPart('notch', e.target.value)}/>
+              <input type="text" placeholder="Ej. 10" name="part_notch" id="partNotch" className="input input-bordered w-full max-w-xs" value={notch} onInput={(e) => updateFormPart('notch', e.target.value)}/>
             </div>
             <div className="form-control w-full max-w-xs bg-white">
               <label className="label" htmlFor="partDescription">
                 Ingrese la descripción de la parte:
               </label>
-              <textarea className="textarea textarea-bordered resize-none text-base" name="part_description" id="partDescription" placeholder="Ej. Guantes de lana." value={part.description} onChange={(e) => updateFormPart('description', e.target.value)}></textarea>
+              <textarea className="textarea textarea-bordered resize-none text-base" name="part_description" id="partDescription" placeholder="Ej. Guantes de lana." value={description} onChange={(e) => updateFormPart('description', e.target.value)}></textarea>
             </div>
             <div className="form-control w-full max-w-xs bg-white">
               <label className="label" htmlFor="partObservation">
                 Ingrese las observaciones (opcional):
               </label>
-              <textarea className="textarea textarea-bordered resize-none text-base" name="part_observation" id="partObservation" placeholder="Ej. Reserva N° 10." value={part.observation} onChange={(e) => updateFormPart('observation', e.target.value)}></textarea>
+              <textarea className="textarea textarea-bordered resize-none text-base" name="part_observation" id="partObservation" placeholder="Ej. Reserva N° 10." value={observation} onChange={(e) => updateFormPart('observation', e.target.value)}></textarea>
             </div>
           </div>
           <div className="modal-action justify-start">
-            <button className="btn btn-success" type="button" onClick={handleAccept}>
+            <button className="btn btn-success" type="button" onClick={handleAccept} disabled={!serial || !amount || !description}>
               Aceptar
             </button>
             <button className="btn btn-error" type="button" onClick={handleCancel}>

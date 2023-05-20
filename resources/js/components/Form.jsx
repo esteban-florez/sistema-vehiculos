@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { CSRF_TOKEN, FORM_ACTION, STEPS } from '../constants'
+import { CSRF_TOKEN, FORM_ACTION, RESULTS, STEPS } from '../constants'
 import ComponentForm from './ComponentForm'
+import ResultModal from './ResultModal'
 import VehicleForm from './VehicleForm'
 import fetchData from '../functions/fetchData'
 import sendData from '../functions/sendData'
 
 const mockupPart = {
-  componentId: 1,
   id: 1,
   serial: '108.238.832',
   code: '7412-87923 G12.X',
@@ -16,10 +16,12 @@ const mockupPart = {
   notch: '6',
   observation: 'Sin bomba 5.01293.23',
   status: true,
+  componentId: 1,
 }
 
 export default function Form() {
   // TODO -> este componente necesita createContext urgentemente
+  const [result, setResult] = useState(null)
   const [parts, setParts] = useState([mockupPart])
   const [components, setComponents] = useState([])
   const [vehicleTypes, setVehicleTypes] = useState([])
@@ -39,14 +41,17 @@ export default function Form() {
   const goVehicle = () => setStep(STEPS.VEHICLE) 
   const goComponents = () => setStep(STEPS.COMPONENTS)
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function handleSubmit(e = null) {
+    e?.preventDefault()
+    setResult(RESULTS.LOADING)
 
     const vehicleData = {...vehicle}
     const componentsData = components.map(component => ({ ...component }))
     const partsData = parts.map(part => ({ ...part }))
 
-    sendData({ vehicle: vehicleData, components: componentsData, parts: partsData })
+    const data = { vehicle: vehicleData, components: componentsData, parts: partsData } 
+
+    sendData(data, setResult)
   }
 
   function addPart(part, componentId) {
@@ -152,6 +157,7 @@ export default function Form() {
           />
         ) : null}
       </div>
+      <ResultModal result={result} retry={() => setResult(null)}/>
     </form>
   )
 }

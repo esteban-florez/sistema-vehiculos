@@ -6,7 +6,7 @@
         <p class="py-6 text-lg font-semibold">Sistema para el registro de vehículos, sus componentes y partes, y la generación de reportes en PDF a partir de los datos registrados.</p>
         <div class="flex justify-center gap-4 mt-3">
           <a href="{{ route('vehicles.create') }}" class="btn btn-primary">Registrar vehículo</a>
-          <button class="btn btn-outline">Lista de vehículos</button>
+          <a href="{{ route('vehicles.index') }}" class="btn btn-outline">Lista de vehículos</a>
         </div>
       </div>
     </div>
