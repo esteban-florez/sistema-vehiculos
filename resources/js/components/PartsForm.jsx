@@ -21,10 +21,10 @@ export default function PartsForm({ open, closeModal, part, editing, updateFormP
   }
   
   function handleAmountInput(e) {
-    let value = e.target.value
+    let value = parseInt(e.target.value)
 
-    if (value !== '') {
-      value = Number(value)
+    if (value < 1 || isNaN(value)) {
+      value = ''
     }
 
     updateFormPart('amount', value)

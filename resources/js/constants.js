@@ -2,6 +2,8 @@ export const SERVER_URL = document.querySelector('meta[name="server-url"]').cont
 
 export const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').content
 
+export const FORM_ACTION = `${SERVER_URL}/api/vehicles/store`
+
 export const STEPS = {
   VEHICLE: Symbol('vehicle'),
   COMPONENTS: Symbol('components')

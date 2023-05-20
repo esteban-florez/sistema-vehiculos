@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
-import { CSRF_TOKEN, SERVER_URL, STEPS } from '../constants'
+import { CSRF_TOKEN, FORM_ACTION, STEPS } from '../constants'
 import ComponentForm from './ComponentForm'
 import VehicleForm from './VehicleForm'
 import fetchData from '../functions/fetchData'
-
-const action = `${SERVER_URL}/vehicles/create`
+import sendData from '../functions/sendData'
 
 const mockupPart = {
   componentId: 1,
@@ -16,6 +15,7 @@ const mockupPart = {
   box: '4',
   notch: '6',
   observation: 'Sin bomba 5.01293.23',
+  status: true,
 }
 
 export default function Form() {
@@ -38,6 +38,16 @@ export default function Form() {
 
   const goVehicle = () => setStep(STEPS.VEHICLE) 
   const goComponents = () => setStep(STEPS.COMPONENTS)
+
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    const vehicleData = {...vehicle}
+    const componentsData = components.map(component => ({ ...component }))
+    const partsData = parts.map(part => ({ ...part }))
+
+    sendData({ vehicle: vehicleData, components: componentsData, parts: partsData })
+  }
 
   function addPart(part, componentId) {
     const newPart = {
@@ -108,16 +118,29 @@ export default function Form() {
     const componentNames = selectedType?.component_names
 
     const components = componentNames?.map(({ id, name }) => ({
-      id, name, serial: '', description: '', status: true,
+      id, name, serial: '98DAD', description: '', status: true,
     }))
 
+    const mockupPart = {
+      componentId: 1,
+      id: 1,
+      serial: '108.238.832',
+      code: '7412-87923 G12.X',
+      description: 'Dispositivo de vacío para aspirar la soldadura',
+      amount: 20,
+      box: '4',
+      notch: '6',
+      observation: 'Sin bomba 5.01293.23',
+    }
+
     setComponents(components ?? [])
-    setParts([])
+    // DEV // []
+    setParts([mockupPart])
 
   }, [vehicle])
 
   return (
-    <form className="card bg-white shadow-md transition-transform" action={action} method="POST">
+    <form className="card bg-white shadow-md transition-transform" action={FORM_ACTION} method="POST" onSubmit={handleSubmit}>
       <input type="hidden" name="_token" value={CSRF_TOKEN}/>
       <div className="card-body">
         {step === STEPS.VEHICLE ? (
