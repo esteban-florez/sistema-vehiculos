@@ -118,20 +118,9 @@ export default function Form() {
     const componentNames = selectedType?.component_names
 
     const components = componentNames?.map(({ id, name }) => ({
+      // DEV // serial: '',
       id, name, serial: '98DAD', description: '', status: true,
     }))
-
-    const mockupPart = {
-      componentId: 1,
-      id: 1,
-      serial: '108.238.832',
-      code: '7412-87923 G12.X',
-      description: 'Dispositivo de vacío para aspirar la soldadura',
-      amount: 20,
-      box: '4',
-      notch: '6',
-      observation: 'Sin bomba 5.01293.23',
-    }
 
     setComponents(components ?? [])
     // DEV // []

@@ -1,4 +1,4 @@
-import { FORM_ACTION } from "../constants"
+import { FORM_ACTION } from '../constants'
 
 export default async function sendData(data) {
   data.parts.forEach(part => {
@@ -21,12 +21,16 @@ export default async function sendData(data) {
       body: formData,
     })
     
-    if (!response.status === 201) {
-      throw new Error(response.statusText)
+    if (response.status === 422) {
+      const errors = await response.json()
+      console.log(errors)
+      // TODO -> manejar errores de validación
     }
 
-    // TODO -> mostrar mensaje y tal
-    console.log('Enviado con éxito')
+    if (response.status === 201) {
+      console.log('Enviado con éxito')
+      // TODO -> mensaje de éxito y redirección
+    }
   } catch (error) {
     console.log(error)
   }

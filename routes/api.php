@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VehicleController;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('types', function () {
     $types = Type::with('componentNames')->get();
-
     return $types;
 });
+
+Route::post('vehicles', [VehicleController::class, 'store']);
