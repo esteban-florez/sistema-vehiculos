@@ -1,6 +1,6 @@
 import PartsRow from './PartsRow'
 
-export default function ComponentPartsTable() {
+export default function ComponentPartsTable({ parts, editPart, deletePart }) {
   return (
     <div className="overflow-x-auto border rounded-lg shadow my-4">
       <table className="table table-compact w-full">
@@ -19,7 +19,12 @@ export default function ComponentPartsTable() {
           </tr>
         </thead>
         <tbody>
-          <PartsRow />
+          {parts.map(part => (
+            <PartsRow key={part.id} part={part} 
+              editPart={editPart}
+              deletePart={deletePart}
+            />)
+          )}
         </tbody>
       </table>
     </div>

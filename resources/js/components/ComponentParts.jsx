@@ -3,8 +3,45 @@ import ComponentPartsEmpty from './ComponentPartsEmpty'
 import ComponentPartsTable from './ComponentPartsTable'
 import PartsForm from './PartsForm'
 
-export default function ComponentParts() {
+const defaultPart = {
+  serial: '',
+  code: '',
+  status: true,
+  amount: '',
+  box: '',
+  notch: '',
+  description: '',
+  observation: ''
+}
+
+export default function ComponentParts({ componentId, parts, addPart, updatePart, deletePart }) {
   const [modal, setModal] = useState(false)
+  const [editingId, setEditingId] = useState(null)
+  const [formPart, setFormPart] = useState(defaultPart)
+
+  const resetForm = () => setFormPart(defaultPart)
+
+  function updateFormPart(key, value) {
+    /* DRY - 2 */
+    setFormPart({
+      ...formPart,
+      [key]: value,
+    })
+  }
+
+  function editPart(id) {
+    setEditingId(id)
+    const partCopy = { ...parts.find(part => part.id === id) }
+    setFormPart(partCopy)
+    setModal(true)
+  }
+
+  function resetEditing() {
+    setEditingId(null)
+    resetForm()
+  }
+
+  const filteredParts = parts.filter(part => part.componentId === componentId)
   
   return (
     <>
@@ -21,12 +58,26 @@ export default function ComponentParts() {
           </span>
         </button>
       </div>
-      {true ? (
-        <ComponentPartsTable />
+      {filteredParts.length !== 0 ? (
+        <ComponentPartsTable 
+          parts={filteredParts}
+          editPart={editPart}
+          deletePart={deletePart}
+        />
       ) : (
         <ComponentPartsEmpty />
       )}
-      {<PartsForm open={modal} closeModal={() => setModal(false)}/>}
+      {<PartsForm 
+        open={modal}
+        closeModal={() => setModal(false)}
+        updateFormPart={updateFormPart}
+        part={formPart}
+        editing={editingId ?? false}
+        resetForm={resetForm}
+        addPart={() => addPart(formPart, componentId)}
+        updatePart={() => updatePart(formPart, editingId)}
+        resetEditing={resetEditing}
+      />}
     </>
   )
 }
