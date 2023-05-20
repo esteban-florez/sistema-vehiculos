@@ -93,7 +93,7 @@
   </style>
 </head>
 <body>
-  {{-- TODO -> hacer archivo css aparte --}}
+  {{-- REFACTOR -> hacer archivo css aparte --}}
   <h1 style="margin-bottom: 1rem;">Reporte de Vehículo</h1>
   <p>
     <span>Modelo:</span>

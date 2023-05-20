@@ -29,9 +29,7 @@ export default async function sendData(data, setResult) {
     }
 
     if (response.status === 201) {
-      console.log('Enviado con éxito')
       setResult(RESULTS.SUCESS)
-      // TODO -> mensaje de éxito y redirección
     }
   } catch (error) {
     console.log(error)

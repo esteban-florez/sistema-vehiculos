@@ -20,7 +20,7 @@ const mockupPart = {
 }
 
 export default function Form() {
-  // TODO -> este componente necesita createContext urgentemente
+  // REFACTOR -> este componente necesita createContext urgentemente
   const [result, setResult] = useState(null)
   const [parts, setParts] = useState([mockupPart])
   const [components, setComponents] = useState([])
@@ -119,7 +119,7 @@ export default function Form() {
   }, [])
 
   useEffect(() => {
-    /** TODO -> este efecto corre más veces de lo necesario, realmente quisiera que corriera solo cuando cambie vehicle.typeId */
+    /* REFACTOR -> este efecto corre más veces de lo necesario, realmente quisiera que corriera solo cuando cambie vehicle.typeId */
     const componentNames = selectedType?.component_names
 
     const components = componentNames?.map(({ id, name }) => ({

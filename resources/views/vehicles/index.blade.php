@@ -40,7 +40,8 @@
                 <a href="{{ route('vehicle.report', $vehicle) }}" class="btn btn-sm btn-success">
                   Descargar reporte
                 </a>
-                <button class="btn btn-sm btn-warning">
+                {{-- TODO -> estas tres acciones --}}
+                {{-- <button class="btn btn-sm btn-warning">
                   Editar
                 </button>
                 <button class="btn btn-sm btn-error">
@@ -48,7 +49,7 @@
                 </button>
                 <button class="btn btn-sm btn-neutral">
                   Ver componentes
-                </button>
+                </button> --}}
               </td>
             </tr>
           @endforeach
