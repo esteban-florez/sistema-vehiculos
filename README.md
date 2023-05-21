@@ -6,6 +6,7 @@ Sistema para el registro de vehículos, sus componentes y partes, y la generaci�
 
 - PHP v8.1
 - Node.js v18
+- MySQL o MariaDB
 
 ## Instalación
 
