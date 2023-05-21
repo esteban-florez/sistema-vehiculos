@@ -42,7 +42,7 @@ export default function ResultModal({ result, retry }) {
             </p>
             <div className="modal-action justify-start">
               {actions[result]}
-              <a href={`${SERVER_URL}/`} className="btn btn-ghost">
+              <a href={`${SERVER_URL}/home`} className="btn btn-ghost">
                 Ir al inicio
               </a>
             </div>

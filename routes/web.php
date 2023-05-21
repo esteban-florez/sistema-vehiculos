@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Route;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -15,43 +16,72 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 |
 */
 
-Route::view('/', 'home')
-    ->name('home');
+Route::middleware('guest')->group(function () {
+    Route::redirect('/', 'login');
 
-Route::get('vehicles/create', function () {
-    return view('vehicles.create');
-})->name('vehicles.create');
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('login', 'create')
+            ->name('login');
+    
+        Route::post('auth', 'store')
+            ->name('auth');
 
-Route::get('vehicles', function () {
-    $vehicles = Vehicle::
-        with('type.componentNames', 'components.parts')
-        ->paginate(5);
+        Route::get('logout', 'destroy')
+            ->name('logout')
+            ->withoutMiddleware('guest');
+    });
 
-    $activeCount = $vehicles
-        ->filter(fn($vehicle) => $vehicle->status === 'Activo')
-        ->count();
+    Route::group([
+        'controller' => RegisterController::class,
+        'as' => 'register.',
+    ], function () {
+        Route::get('signup', 'create')
+            ->name('create');
 
-    return view('vehicles.index', [
-        'vehicles' => $vehicles,
-        'activeCount' => $activeCount,
-    ]);
-})->name('vehicles.index');
+        Route::post('register', 'store')
+            ->name('store');
+    });
+});
 
-Route::get('vehicles/{vehicle}/report', function (Vehicle $vehicle) {
-    $vehicle->load('components.parts', 'type.componentNames');
+Route::middleware('auth')->group(function () {
+    Route::view('home', 'home')
+        ->name('home');
 
-    $pdf = PDF::loadView('pdf.vehicle-report', [
-        'vehicle' => $vehicle,
-        'date' => now()->format('d/m/Y')
-    ]);
+    Route::get('vehicles/create', function () {
+        return view('vehicles.create');
+    })->name('vehicles.create');
 
-    $pdf->setPaper('a4', 'landscape');
+    Route::get('vehicles', function () {
+        $vehicles = Vehicle::
+            with('type.componentNames', 'components.parts')
+            ->paginate(5);
 
-    $filename = 'Reporte-Vehiculo.pdf';
-    $path = public_path($filename);
-    $pdf->save($filename);
+        $activeCount = $vehicles
+            ->filter(fn($vehicle) => $vehicle->status === 'Activo')
+            ->count();
 
-    return response()
-        ->download($path)
-        ->deleteFileAfterSend();
-})->name('vehicle.report');
+        return view('vehicles.index', [
+            'vehicles' => $vehicles,
+            'activeCount' => $activeCount,
+        ]);
+    })->name('vehicles.index');
+
+    Route::get('vehicles/{vehicle}/report', function (Vehicle $vehicle) {
+        $vehicle->load('components.parts', 'type.componentNames');
+
+        $pdf = PDF::loadView('pdf.vehicle-report', [
+            'vehicle' => $vehicle,
+            'date' => now()->format('d/m/Y')
+        ]);
+
+        $pdf->setPaper('a4', 'landscape');
+
+        $filename = 'Reporte-Vehiculo.pdf';
+        $path = public_path($filename);
+        $pdf->save($filename);
+
+        return response()
+            ->download($path)
+            ->deleteFileAfterSend();
+    })->name('vehicle.report');
+});
