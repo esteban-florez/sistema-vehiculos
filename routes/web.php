@@ -1,8 +1,11 @@
 <?php
 
-use App\Models\Vehicle;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\VehicleController;
+use App\Models\Component;
+use App\Models\Part;
 use Illuminate\Support\Facades\Route;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,43 +18,67 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 |
 */
 
-Route::view('/', 'home')
-    ->name('home');
+Route::middleware('guest')->group(function () {
+    Route::redirect('/', 'login');
 
-Route::get('vehicles/create', function () {
-    return view('vehicles.create');
-})->name('vehicles.create');
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('login', 'create')
+            ->name('login');
+    
+        Route::post('auth', 'store')
+            ->name('auth');
 
-Route::get('vehicles', function () {
-    $vehicles = Vehicle::
-        with('type.componentNames', 'components.parts')
-        ->paginate(5);
+        Route::get('logout', 'destroy')
+            ->name('logout')
+            ->withoutMiddleware('guest');
+    });
 
-    $activeCount = $vehicles
-        ->filter(fn($vehicle) => $vehicle->status === 'Activo')
-        ->count();
+    Route::group([
+        'controller' => RegisterController::class,
+        'as' => 'register.',
+    ], function () {
+        Route::get('signup', 'create')
+            ->name('create');
 
-    return view('vehicles.index', [
-        'vehicles' => $vehicles,
-        'activeCount' => $activeCount,
-    ]);
-})->name('vehicles.index');
+        Route::post('register', 'store')
+            ->name('store');
+    });
+});
 
-Route::get('vehicles/{vehicle}/report', function (Vehicle $vehicle) {
-    $vehicle->load('components.parts', 'type.componentNames');
+Route::middleware('auth')->group(function () {
+    Route::view('home', 'home')
+        ->name('home');
 
-    $pdf = PDF::loadView('pdf.vehicle-report', [
-        'vehicle' => $vehicle,
-        'date' => now()->format('d/m/Y')
-    ]);
+    Route::controller(VehicleController::class)->group(function () {
+        Route::get('vehicles', 'index')
+            ->name('vehicles.index');
 
-    $pdf->setPaper('a4', 'landscape');
+        Route::get('vehicles/create', 'create')
+            ->name('vehicles.create');
+    
+        Route::get('vehicles/{vehicle}', 'show')
+            ->name('vehicles.show');
 
-    $filename = 'Reporte-Vehiculo.pdf';
-    $path = public_path($filename);
-    $pdf->save($filename);
+        // TODO -> editar
+        // Route::get('vehicles/{vehicle}/edit', 'edit')
+        //     ->name('vehicles.edit');
+    
+        Route::delete('vehicles/{vehicle}', 'destroy')
+            ->name('vehicles.destroy');
 
-    return response()
-        ->download($path)
-        ->deleteFileAfterSend();
-})->name('vehicle.report');
+        Route::get('vehicles/{vehicle}/report', 'report')
+            ->name('vehicle.report');
+    });
+
+    Route::get('components/{component}', function (Component $component) {
+        $component->load('componentName', 'vehicle');
+
+        $parts = Part::whereBelongsTo($component)
+            ->paginate(10);;
+
+        return view('component.show', [
+            'component_' => $component,
+            'parts' => $parts
+        ]);
+    })->name('component.show');
+});
