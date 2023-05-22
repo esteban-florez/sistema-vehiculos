@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -14,18 +13,18 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email', 'min:6', 'max:50'],
-            'password' => ['required', 'max:20', Password::defaults()],
-        ]);
+        $credentials = [
+            'email' => $request->input('email', ''),
+            'password' => $request->input('password', '')
+        ];
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->home();
+            return redirect()->route('home');
         }
         
         return back()->withErrors([
-            'email' => 'Las credenciales no son válidas.',
+            'login' => 'Las credenciales no son válidas.',
         ]);
     }
     
