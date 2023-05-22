@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\VehicleController;
+use App\Models\Component;
+use App\Models\Part;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,4 +69,16 @@ Route::middleware('auth')->group(function () {
         Route::get('vehicles/{vehicle}/report', 'report')
             ->name('vehicle.report');
     });
+
+    Route::get('components/{component}', function (Component $component) {
+        $component->load('componentName', 'vehicle');
+
+        $parts = Part::whereBelongsTo($component)
+            ->paginate(10);;
+
+        return view('component.show', [
+            'component_' => $component,
+            'parts' => $parts
+        ]);
+    })->name('component.show');
 });

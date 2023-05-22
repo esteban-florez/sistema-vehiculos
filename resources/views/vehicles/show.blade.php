@@ -25,8 +25,11 @@
         </span>
       </a> --}}
     </div>
-    @if ($components)
-      <table class="table w-full mt-4">
+    @if ($components->isNotEmpty())
+      <h2 class="mt-6 py-2 px-4 rounded-lg font-bold text-xl bg-gray-100">
+        Componentes del vehículo
+      </h2>
+      <table class="table w-full mt-2">
         <thead>
           <tr>
             <th></th>
@@ -48,7 +51,7 @@
               <td>{{ $component->description }}</td>
               <td>{{ $component->status }}</td>
               <td class="text-center">
-                <a href="{{ route('home', $vehicle) }}" class="btn btn-sm btn-info">
+                <a href="{{ route('component.show', $component) }}" class="btn btn-sm btn-info">
                   Detalles
                 </a>
               </td>
