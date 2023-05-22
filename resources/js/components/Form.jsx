@@ -123,13 +123,13 @@ export default function Form() {
     const componentNames = selectedType?.component_names
 
     const components = componentNames?.map(({ id, name }) => ({
-      // DEV - serial: '98DAD',
-      id, name, serial: '', description: '', status: true,
+      // DEV - serial: '',
+      id, name, serial: '98DAD', description: '', status: true,
     }))
 
     setComponents(components ?? [])
-    // DEV - [mockupPart]
-    setParts([])
+    // DEV - []
+    setParts([mockupPart])
 
   }, [vehicle])
 

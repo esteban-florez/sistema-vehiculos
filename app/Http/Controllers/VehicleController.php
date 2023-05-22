@@ -6,10 +6,31 @@ use App\Models\Component;
 use App\Models\Part;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Validator;
 
 class VehicleController extends Controller
 {
+    public function index()
+    {
+        $vehicles = Vehicle::with('type.componentNames', 'components.parts')
+            ->paginate(5);
+
+        $activeCount = $vehicles
+            ->filter(fn($vehicle) => $vehicle->status === 'Activo')
+            ->count();
+
+        return view('vehicles.index', [
+            'vehicles' => $vehicles,
+            'activeCount' => $activeCount,
+        ]);
+    }
+
+    public function create()
+    {
+        return view('vehicles.create');
+    }
+
     public function store(Request $request) {
         $content = $request->content();
 
@@ -40,6 +61,33 @@ class VehicleController extends Controller
         Part::insert($parts->all());
         
         return response('', 201);
+    }
+
+    public function show(Vehicle $vehicle)
+    {
+        $vehicle->load('components.parts', 'type.componentNames');
+
+        return view('vehicles.show');
+    }
+
+    public function report(Vehicle $vehicle)
+    {
+        $vehicle->load('components.parts', 'type.componentNames');
+    
+        $pdf = PDF::loadView('pdf.vehicle-report', [
+            'vehicle' => $vehicle,
+            'date' => now()->format('d/m/Y')
+        ]);
+
+        $pdf->setPaper('a4', 'landscape');
+
+        $filename = 'Reporte-Vehiculo.pdf';
+        $path = public_path($filename);
+        $pdf->save($filename);
+
+        return response()
+            ->download($path)
+            ->deleteFileAfterSend();
     }
 
     protected function validateVehicle($vehicle)

@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
-use App\Models\Vehicle;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,41 +47,17 @@ Route::middleware('auth')->group(function () {
     Route::view('home', 'home')
         ->name('home');
 
-    Route::get('vehicles/create', function () {
-        return view('vehicles.create');
-    })->name('vehicles.create');
+    Route::controller(VehicleController::class)->group(function () {
+        Route::get('vehicles', 'index')
+            ->name('vehicles.index');
 
-    Route::get('vehicles', function () {
-        $vehicles = Vehicle::
-            with('type.componentNames', 'components.parts')
-            ->paginate(5);
-
-        $activeCount = $vehicles
-            ->filter(fn($vehicle) => $vehicle->status === 'Activo')
-            ->count();
-
-        return view('vehicles.index', [
-            'vehicles' => $vehicles,
-            'activeCount' => $activeCount,
-        ]);
-    })->name('vehicles.index');
-
-    Route::get('vehicles/{vehicle}/report', function (Vehicle $vehicle) {
-        $vehicle->load('components.parts', 'type.componentNames');
-
-        $pdf = PDF::loadView('pdf.vehicle-report', [
-            'vehicle' => $vehicle,
-            'date' => now()->format('d/m/Y')
-        ]);
-
-        $pdf->setPaper('a4', 'landscape');
-
-        $filename = 'Reporte-Vehiculo.pdf';
-        $path = public_path($filename);
-        $pdf->save($filename);
-
-        return response()
-            ->download($path)
-            ->deleteFileAfterSend();
-    })->name('vehicle.report');
+        Route::get('vehicles/create', 'create')
+            ->name('vehicles.create');
+    
+        Route::get('vehicle.show', 'show')
+            ->name('vehicles.show');
+    
+        Route::get('vehicles/{vehicle}/report', 'report')
+            ->name('vehicle.report');
+    });
 });

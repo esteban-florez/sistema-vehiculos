@@ -21,7 +21,7 @@ export default function ComponentForm({ components, updateComponent, goVehicle, 
     }
 
     window.scrollTo({
-      top: 0,
+      top: 200,
       behavior: 'smooth'
     })
     setCurrent(components[index - 1].id)
@@ -31,7 +31,7 @@ export default function ComponentForm({ components, updateComponent, goVehicle, 
     // Si, es muy raro, pero a veces no me scrollea si el siguiente componente a editar no ha sido modificado, lol
     setTimeout(() => {
       window.scrollTo({
-        top: 0,
+        top: 200,
         behavior: 'smooth'
       })
     }, 0)
