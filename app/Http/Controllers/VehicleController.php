@@ -76,6 +76,14 @@ class VehicleController extends Controller
         ]);
     }
 
+    public function destroy(Vehicle $vehicle)
+    {
+        $vehicle->delete();
+
+        return redirect()->route('vehicles.index')
+            ->with('alert', 'El vehículo se ha eliminado.');
+    }
+
     public function report(Vehicle $vehicle)
     {
         $vehicle->load('components.parts', 'type.componentNames');

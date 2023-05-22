@@ -54,12 +54,16 @@ Route::middleware('auth')->group(function () {
         Route::get('vehicles/create', 'create')
             ->name('vehicles.create');
     
-        Route::get('vehicle/{vehicle}', 'show')
+        Route::get('vehicles/{vehicle}', 'show')
             ->name('vehicles.show');
 
-        Route::get('vehicles/{vehicle}/edit', 'edit')
-            ->name('vehicles.edit');
+        // TODO -> editar
+        // Route::get('vehicles/{vehicle}/edit', 'edit')
+        //     ->name('vehicles.edit');
     
+        Route::delete('vehicles/{vehicle}', 'destroy')
+            ->name('vehicles.destroy');
+
         Route::get('vehicles/{vehicle}/report', 'report')
             ->name('vehicle.report');
     });
