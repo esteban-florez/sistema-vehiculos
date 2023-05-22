@@ -19,7 +19,9 @@ return new class extends Migration
             $table->foreignId('vehicle_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->foreignId('component_name_id');
+            $table->foreignId('component_name_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

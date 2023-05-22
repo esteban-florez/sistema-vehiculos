@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -35,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
                 ->numbers()
                 ->symbols();
         });
+
+        Paginator::defaultView('vendor.pagination.simple-tailwind');
+        
+        Paginator::defaultSimpleView('vendor.pagination.simple-tailwind');
     }
 }

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('component_names', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('type_id');
+            $table->foreignId('type_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

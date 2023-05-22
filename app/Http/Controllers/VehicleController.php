@@ -65,9 +65,15 @@ class VehicleController extends Controller
 
     public function show(Vehicle $vehicle)
     {
-        $vehicle->load('components.parts', 'type.componentNames');
+        $vehicle->load('type');
 
-        return view('vehicles.show');
+        $components = Component::whereBelongsTo($vehicle)
+            ->paginate(10);
+
+        return view('vehicles.show', [
+            'vehicle' => $vehicle,
+            'components' => $components,
+        ]);
     }
 
     public function report(Vehicle $vehicle)

@@ -34,4 +34,11 @@ class Vehicle extends Model
             },
         );
     }
+
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => "{$this->type->name} - {$this->serial}",
+        );
+    }
 }

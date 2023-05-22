@@ -54,8 +54,11 @@ Route::middleware('auth')->group(function () {
         Route::get('vehicles/create', 'create')
             ->name('vehicles.create');
     
-        Route::get('vehicle.show', 'show')
+        Route::get('vehicle/{vehicle}', 'show')
             ->name('vehicles.show');
+
+        Route::get('vehicles/{vehicle}/edit', 'edit')
+            ->name('vehicles.edit');
     
         Route::get('vehicles/{vehicle}/report', 'report')
             ->name('vehicle.report');

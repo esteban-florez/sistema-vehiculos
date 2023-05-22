@@ -37,7 +37,7 @@
               <td>{{ $vehicle->type->componentNames->count() }} componentes</td>
               <td>{{ $vehicle->status }}</td>
               <td class="text-center">
-                <a href="{{ route('vehicle.show', $vehicle) }}" class="btn btn-sm btn-info">
+                <a href="{{ route('vehicles.show', $vehicle) }}" class="btn btn-sm btn-info">
                   Detalles
                 </a>
                 <a href="{{ route('vehicle.report', $vehicle) }}" class="btn btn-sm btn-success">
